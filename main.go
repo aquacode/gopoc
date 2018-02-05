@@ -14,7 +14,7 @@ import (
 const (
 
 	gopocLogPrefix string = "gopoc: "
-	gopocScript string = "/Users/michaelb/gopoctester.sh"
+	gopocScript string = "./gopoctester.sh"
 
 )
 

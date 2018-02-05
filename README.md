@@ -1,3 +1,4 @@
-# gopoc - Go POC to explore various aspected of Go programming
+# gopoc  
+## A Go Proof of Concept to explore various aspected of Go programming
 
 

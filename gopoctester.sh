@@ -1,6 +1,8 @@
 #!/bin/bash
 
-echo "This is a test"
+echo
+echo "This is a test script"
 echo
 sleep 5
 echo "Ending test"
+echo

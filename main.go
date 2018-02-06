@@ -2,9 +2,12 @@ package main
 
 import (
 
+	"fmt"
+	"strconv"
 	"log"
 	"io"
 	"bufio"
+	"flag"
 
 	"os"
 	"os/exec"
@@ -13,12 +16,15 @@ import (
 
 const (
 
+	gopocLogfile string = "gopoc-%v.log"
 	gopocLogPrefix string = "gopoc: "
 	gopocScript string = "./gopoctester.sh"
 
 )
 
 var (
+
+	sleepDurationSec int
 
 	logFile *os.File 
 	logger *log.Logger
@@ -27,6 +33,8 @@ var (
 )
 
 func init() {
+
+	flag.IntVar(&sleepDurationSec, "sleepDurationSec", 5, "Set the number of seconds to sleep during cmd execution")
 
 	var logFileError error
 	logFile, logFileError = os.Create("gopoc.log")
@@ -43,17 +51,27 @@ func init() {
 
 func main() {
 
-	defer logFile.Close()
+	flag.Parse()
 
-	logger.Printf("Hello Go POC")
+	defer logFile.Close() // close logFile after main() exits
 
-	RunCommand(gopocScript)
+	logger.Printf("Go POC")
+
+	strformat := "help-%s"
+	yesser := fmt.Sprintf(strformat, "me!")
+	logger.Printf(yesser)
+
+	RunCommand(gopocScript, strconv.Itoa(sleepDurationSec))
 
 	logger.Printf("Done!")
 
 }
 
 func RunCommand(name string, args ...string) {
+
+	logger.Printf("Executing Cmd:")
+	logger.Printf("\tname: %s", name)
+	logger.Printf("\targs: %s", args)
 
 	cmd := exec.Command(name, args...)
 	stdout, _ := cmd.StdoutPipe()

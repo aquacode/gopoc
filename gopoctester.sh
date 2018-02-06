@@ -1,8 +1,10 @@
 #!/bin/bash
 
+SLEEPDURATIONSEC=$1
+
 echo
 echo "This is a test script"
 echo
-sleep 5
+sleep $SLEEPDURATIONSEC
 echo "Ending test"
 echo

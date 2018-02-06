@@ -1,6 +1,12 @@
 # gopoc  
-## A Go Proof of Concept to explore various aspected of Go programming
+## Go Proof of Concept application (not production)
 
-This repository explores a pattern for basic logging for simple Go programs that intend to write their output to the console and to a log file.
+The purpose of this repository is to explore patterns for the following requirements:
+* Create installable application that runs from command line, i.e. create a main() function
+* Leverage global const and var declarations
+* Use an init() function to initialize program
+* Setup/include basic logging that:
+  1. Writes to a log file
+  2. Also writes to the console
+* Use the "flag" package for command line arguments
 
-It may also explore use of the "flag" package for command line arguments.

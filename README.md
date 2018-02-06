@@ -13,3 +13,11 @@ The purpose of this repository is to explore patterns for the following requirem
 * Launch a command that calls another shell script
   1. Send the output to the Logger
 * Extract functionality into funcs that main() calls
+
+## Install and run
+
+```bash
+go get github.com/aquacode/gopoc
+go install
+gopoc
+```

@@ -47,7 +47,15 @@ func main() {
 
 	logger.Printf("Hello Go POC")
 
-	cmd := exec.Command(gopocScript)
+	RunCommand(gopocScript)
+
+	logger.Printf("Done!")
+
+}
+
+func RunCommand(name string, args ...string) {
+
+	cmd := exec.Command(name, args...)
 	stdout, _ := cmd.StdoutPipe()
 	stderr, _ := cmd.StderrPipe()
 	if err := cmd.Start(); err != nil {
@@ -65,7 +73,5 @@ func main() {
 	}
 
 	cmd.Wait()
-
-	logger.Printf("Done!")
 
 }

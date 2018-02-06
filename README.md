@@ -9,4 +9,5 @@ The purpose of this repository is to explore patterns for the following requirem
   1. Writes to a log file
   2. Also writes to the console
 * Use the "flag" package for command line arguments
-
+* Launch a command that calls another shell script
+  1. Send the output to the Logger

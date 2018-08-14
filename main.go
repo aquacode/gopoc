@@ -5,7 +5,6 @@ import (
 
 	"bufio"
 	"flag"
-	"fmt"
 	"io"
 	"log"
 	"strconv"
@@ -15,10 +14,10 @@ import (
 )
 
 const (
-	gopocLogfile   string = "gopoc-%v.log"
-	gopocLogPrefix string = "gopoc: "
-	gopocScript    string = "./gopoctester.sh"
-	gopocBatch     string = "gopoctester.bat"
+	gopocLogfile    string = "gopoc-%v.log"
+	gopocLogPrefix  string = "gopoc: "
+	gopocScript     string = "./gopoctester.sh"
+	gopocPowershell string = "gopoctester.ps1"
 )
 
 var (
@@ -54,12 +53,8 @@ func main() {
 
 	logger.Printf("Go POC")
 
-	strformat := "help-%s"
-	yesser := fmt.Sprintf(strformat, "me!")
-	logger.Printf(yesser)
-
 	if runtime.GOOS == "windows" {
-		runCommand(gopocBatch, strconv.Itoa(sleepDurationSec))
+		runCommand("powershell.exe", "-executionpolicy", "bypass", "-File", gopocPowershell, strconv.Itoa(sleepDurationSec))
 	} else {
 		runCommand(gopocScript, strconv.Itoa(sleepDurationSec))
 	}

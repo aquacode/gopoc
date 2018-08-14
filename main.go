@@ -1,35 +1,32 @@
-package main 
+package main
 
 import (
+	"runtime"
 
-	"fmt"
-	"strconv"
-	"log"
-	"io"
 	"bufio"
 	"flag"
+	"fmt"
+	"io"
+	"log"
+	"strconv"
 
 	"os"
 	"os/exec"
-
 )
 
 const (
-
-	gopocLogfile string = "gopoc-%v.log"
+	gopocLogfile   string = "gopoc-%v.log"
 	gopocLogPrefix string = "gopoc: "
-	gopocScript string = "./gopoctester.sh"
-
+	gopocScript    string = "./gopoctester.sh"
+	gopocBatch     string = "gopoctester.bat"
 )
 
 var (
-
 	sleepDurationSec int
 
-	logFile *os.File 
-	logger *log.Logger
+	logFile     *os.File
+	logger      *log.Logger
 	multiWriter io.Writer
-
 )
 
 func init() {
@@ -44,7 +41,7 @@ func init() {
 
 	multiWriter = io.MultiWriter(logFile, os.Stdout)
 
-	logger = log.New(multiWriter, gopocLogPrefix, log.Ldate | log.Ltime | log.Lshortfile)
+	logger = log.New(multiWriter, gopocLogPrefix, log.Ldate|log.Ltime|log.Lshortfile)
 	logger.SetOutput(multiWriter)
 
 }
@@ -61,13 +58,17 @@ func main() {
 	yesser := fmt.Sprintf(strformat, "me!")
 	logger.Printf(yesser)
 
-	RunCommand(gopocScript, strconv.Itoa(sleepDurationSec))
+	if runtime.GOOS == "windows" {
+		runCommand(gopocBatch, strconv.Itoa(sleepDurationSec))
+	} else {
+		runCommand(gopocScript, strconv.Itoa(sleepDurationSec))
+	}
 
 	logger.Printf("Done!")
 
 }
 
-func RunCommand(name string, args ...string) {
+func runCommand(name string, args ...string) {
 
 	logger.Printf("Executing Cmd:")
 	logger.Printf("\tname: %s", name)
@@ -80,7 +81,7 @@ func RunCommand(name string, args ...string) {
 		logger.Printf(err.Error())
 		panic(err)
 	}
-	
+
 	multiReader := io.MultiReader(stdout, stderr)
 	in := bufio.NewScanner(multiReader)
 	for in.Scan() {
